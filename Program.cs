@@ -1,12 +1,58 @@
-﻿using GameOfWar;
-~~~~
-// state.CardDeck.Shuffle();
-// state.PlayerDeck = new Deck(state.CardDeck.Deal(26));
-// state.ComputerDeck = new Deck(state.CardDeck.Deal(26));
-~~~~
+using GameOfWar;
+
+namespace GameOfWar
+{
+    public class GameState
+    {
+        // Create a public Deck property called CardDeck
+        public Deck CardDeck { get; set; }
+
+        // public Deck = CardCeck
+
+        // Create a public Deck property called PlayerDeck
+        public Deck PlayerDeck { get; set; }
+
+        // Create a public Deck property called ComputerDeck
+
+        public Deck ComputerDeck { get; set; }
+
+        // Create a public Deck property called TableDeck
+
+        public Deck TableDeck { get; set; }
+
+        // Create a public string property called Winner
+        public string Winner { get; set; }
+
+
+        // Create a public constructor that accepts no parameters. It should:
+        //    Initialize Winner to be empty (not null)
+        //    Initialize CardDeck to be a new, fresh deck of 52 cards
+        //    Initialize PlayerDeck, ComputerDeck, and TableDeck to be empty Deck objects (no cards)
+
+        public GameState()
+        {
+            Winner = string.Empty;
+            CardDeck = new Deck(null, false); // fresh deck of 52 cards
+            PlayerDeck = new Deck(null, true); // empty deck
+            ComputerDeck = new Deck(null, true); // empty deck
+            TableDeck = new Deck(null, true); // empty deck
+        }
+    }
+}
+
+
 // Create an instance of the GameState class
+GameState state = new GameState();
+
+
+
 // Shuffle CardDeck within your instance
+state.CardDeck.Shuffle();
+
 // Deal 26 cards each from CardDeck to your instance's PlayerDeck and ComputerDeck
+state.PlayerDeck = new Deck(state.CardDeck.Deal(26));
+state.ComputerDeck = new Deck(state.CardDeck.Deal(26));
+
 
 
 // Create a function with the signature: static bool PlayCards(GameState state, int playerCardIndex)
@@ -22,26 +68,76 @@
 //         If the player deck is empty, the computer wins and state.Winner should be set to "Player"
 //     return true
 
+static bool PlayCards(GameState state, int playerCardIndex)
+{
+    state.PlayerDeck.PullCardAtIndex(playerCardIndex);
+
+    state.ComputerDeck.PullCardAtIndex(0);
+
+    Card playerCard = state.PlayerDeck.CardAtIndex(playerCardIndex);
+    Card computerCard = state.ComputerDeck.CardAtIndex(0);
+    if (playerCard > computerCard)
+    {
+        //player gets both cards and any in TableDeck
+        List<Card> wonCards = new List<Card>
+        {
+            playerCard,
+            computerCard
+        };
+        wonCards.AddRange(state.TableDeck.PullAllCards());
+        state.PlayerDeck.AddCards(wonCards);
+    }
+    else if (computerCard > playerCard)
+    {
+        //computer gets both cards and any in TableDeck
+        List<Card> wonCards = new List<Card>
+        {
+            playerCard,
+            computerCard
+        };
+        wonCards.AddRange(state.TableDeck.PullAllCards());
+        state.ComputerDeck.AddCards(wonCards);
+    }
+    else
+    {
+        //both cards go into TableDeck
+        state.TableDeck.AddCard(playerCard);
+        state.TableDeck.AddCard(computerCard);
+    }
+
+   return true;
+}
+
+
+
 
 // Call Lib.RunGame(), passing two parameters: the state object you instantiated above and the name of your PlayCards function
 
+Lib.RunGame(state, PlayCards);
+
+/*
 namespace GameOfWar
 {
     public class GameState
     {
         // Create a public Deck property called CardDeck
+        public Deck CardDeck { get; set; }
 
+        // public Deck = CardCeck
 
         // Create a public Deck property called PlayerDeck
-
+        public Deck PlayerDeck { get; set; }
 
         // Create a public Deck property called ComputerDeck
 
+        public Deck ComputerDeck { get; set; }
 
         // Create a public Deck property called TableDeck
 
+        public Deck TableDeck { get; set; }
 
         // Create a public string property called Winner
+        public string Winner { get; set; }
 
 
         // Create a public constructor that accepts no parameters. It should:
@@ -50,3 +146,17 @@ namespace GameOfWar
         //    Initialize PlayerDeck, ComputerDeck, and TableDeck to be empty Deck objects (no cards)
     }
 }
+*/
+
+// ~~~
+// GameState state = new GameState();
+// state.CardDeck.Shuffle();
+// state.PlayerDeck = new Deck(state.CardDeck.Deal(26));
+// state.ComputerDeck = new Deck(state.CardDeck.Deal(26));
+/*
+static bool PlayCards(GameState state, int playerCardIndex);
+{
+    return true;
+}
+*/
+//~~~~

@@ -1,4 +1,30 @@
 using System.Collections.ObjectModel;
+  //shuffle
+  // public void Shuffle()
+        // {
+        //     Random rand = new Random();
+        //     int n = card.Count;
+        //     for (int i = n - 1; i > 0; i--)
+        //     {
+        //         int j = rand.Next(0, i + 1);
+        //         // Swap card[i] with the element at random index
+        //         Card temp = card[i];
+        //         card[i] = card[j];
+        //         card[j] = temp;
+        //     }
+        // }
+
+//remove
+        // public Card PullCardAtIndex(int index)
+        // {
+        //     if (index < 0 || index >= collection_cards)
+        //     {
+        //         throw new IndexOutOfRangeException("Index is out of range");
+        //     }
+        //     Card card = card[index];
+        //     card.RemoveAt(index);
+        //     return card;
+        // }
 
 namespace GameOfWar
 {

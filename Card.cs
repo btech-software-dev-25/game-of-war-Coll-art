@@ -1,5 +1,5 @@
-namespace GameOfWar
-{
+
+
     public class Card
     {
 
@@ -59,4 +59,3 @@ namespace GameOfWar
         }
 
     }   
-}

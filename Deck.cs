@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 
-namespace GameOfWar
-{
+
+
     public class Deck
     {
         public static string[] RankNames =
@@ -17,10 +17,13 @@ namespace GameOfWar
 
 
         // Create a public int property Count that returns the Count value from the private collection _cards
-        public int collection_cards;
+      //  private List<Card> cards;
 
-        // Create a private field _cards that is a List<Card>
-        private List<Card> card; 
+    // Create a private field _cards that is a List<Card>
+    private List<Card> _cards; 
+
+        // Create a public int property Count that returns the Count value from the private collection _cards
+        public int Count => _cards.Count;
 
         // Create a public constructor that takes two parameter: a List<card> called cards and a boolean value called isEmptyDeck
         // If cards is not null and has elements in it, assign it to _cards and be done
@@ -31,14 +34,16 @@ namespace GameOfWar
         {
             if (cards != null && cards.Count > 0)
             {
-                card = cards;
+                _cards = cards;
             }
             else
             {
-                card = new List<Card>();
+                _cards = new List<Card>();
                 if (!isEmptyDeck)
                 {
                     InitializeDeck();
+                    
+                    //System.Console.WriteLine(_cards.Count);
                 }
             }
 
@@ -60,7 +65,7 @@ namespace GameOfWar
                 for (int j = 0; j < suits.Length; j++)
                 {
                     Card newCard = new Card(suits[j], i);
-                    card.Add(newCard);
+                    _cards.Add(newCard);
                 }
             }
         }
@@ -70,21 +75,23 @@ namespace GameOfWar
         //finish: make a for loop and Assign i the value of a random number up to the length of card
         //makes new list of cards
         {
-            List<Card> newCards = new List<Card>();
+        List<Card> newCards = new List<Card>();
+
+        int Length = _cards.Count;
             
-            for (int i = 0; i < card.Count; i++)
+            for (int i = 0; i < Length; i++)
             {
                 Random rand = new Random();
-                int n = rand.Next(52) + 1;
+                int n = rand.Next(_cards.Count);
 
-                Card card2 = card[i];
+                Card card2 = _cards[n];
 
-                card.RemoveAt(n);
+                _cards.RemoveAt(n);
 
                 newCards.Add(card2);
             }
 
-            card = newCards;
+            _cards = newCards;
 
         }
 
@@ -96,11 +103,11 @@ namespace GameOfWar
         public Card CardAtIndex(int index)
         //creates a card at a particular index 
         {
-            if (index < 0 || index >= collection_cards)
+            if (index < 0 || index >= _cards.Count)
             {
                 throw new IndexOutOfRangeException("Index is out of range");
             }
-            return card[index];
+            return _cards[index];
         }
 
         // Create a public method PullCardAtIndex which does exactly the same thing as CardAtIndex
@@ -109,18 +116,20 @@ namespace GameOfWar
         public Card PullCardAtIndex(int index)
         //removes card at particular index
         {
-            if (index < 0 || index >= collection_cards)
+            if (index < 0 || index >= _cards.Count)
             {
                 throw new IndexOutOfRangeException("Index is out of range");
             }
 
-            if (card == card)
+             else //(card == card)
             {
+                Card DuplicateCard = _cards[index];
+
                 //deck.Remove(CardAtIndex);
-                card.Remove(CardAtIndex);
-                return card[index];
+                _cards.RemoveAt(index);
+                return DuplicateCard;
             }
-            return card[index];
+           //return card[index];
         }
 
         // Create a public method PullAllCards that returns a list of all of the cards in the deck
@@ -130,8 +139,8 @@ namespace GameOfWar
         //removes all cards from deck
         //did i already do this in SHUFFLE?---
         {
-            List<Card> allCards = card;
-            card.Clear();
+            List<Card> allCards = _cards;
+            _cards.Clear();
             return allCards;
         }
 
@@ -142,7 +151,7 @@ namespace GameOfWar
         public void PushCard(Card newCard)
         //adds a card to the deck
         {
-            card.Add(newCard);
+            _cards.Add(newCard);
         }
 
 
@@ -153,7 +162,7 @@ namespace GameOfWar
         public void PushCards(List<Card> newCards)
         //adds a list of cards to the deck
         {
-            card.AddRange(newCards);
+           _cards.AddRange(newCards);
         }
 
 
@@ -165,8 +174,10 @@ namespace GameOfWar
         public List<Card> Deal(int numberOfCards)
         //deals a certain number of cards from the deck
         {
-            if (numberOfCards < 0 || numberOfCards > collection_cards)
-            {
+            if (numberOfCards < 0 || numberOfCards > _cards.Count)
+        {
+                //System.Console.WriteLine(_cards.Count);
+
                 throw new ArgumentOutOfRangeException("Number of cards requested is out of range");
             }
 
@@ -174,44 +185,16 @@ namespace GameOfWar
 
             for (int i = 0; i < numberOfCards; i++)
             {
-                dealtCards.Add(card[0]);
-                card.RemoveAt(0);
+                dealtCards.Add(_cards[0]);
+                _cards.RemoveAt(0);
             }
 
             return dealtCards;
         }
 
     }
-}
+
 
        
 
         
-        //shuffle
-  // public void Shuffle()
-        // {
-        //     Random rand = new Random();
-        //     int n = card.Count;
-        //     for (int i = n - 1; i > 0; i--)
-        //     {
-        //         int j = rand.Next(0, i + 1);
-        //         // Swap card[i] with the element at random index
-        //         Card temp = card[i];
-        //         card[i] = card[j];
-        //         card[j] = temp;
-        //     }
-        // }
-
-
-
-        //remove
-        // public Card PullCardAtIndex(int index)
-        // {
-        //     if (index < 0 || index >= collection_cards)
-        //     {
-        //         throw new IndexOutOfRangeException("Index is out of range");
-        //     }
-        //     Card card = card[index];
-        //     card.RemoveAt(index);
-        //     return card;
-        // }

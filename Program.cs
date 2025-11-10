@@ -1,56 +1,28 @@
-using GameOfWar;
-
-namespace GameOfWar
-{
-    public class GameState
-    {
-        // Create a public Deck property called CardDeck
-        public Deck CardDeck { get; set; }
-
-        // public Deck = CardCeck
-
-        // Create a public Deck property called PlayerDeck
-        public Deck PlayerDeck { get; set; }
-
-        // Create a public Deck property called ComputerDeck
-
-        public Deck ComputerDeck { get; set; }
-
-        // Create a public Deck property called TableDeck
-
-        public Deck TableDeck { get; set; }
-
-        // Create a public string property called Winner
-        public string Winner { get; set; }
 
 
-        // Create a public constructor that accepts no parameters. It should:
-        //    Initialize Winner to be empty (not null)
-        //    Initialize CardDeck to be a new, fresh deck of 52 cards
-        //    Initialize PlayerDeck, ComputerDeck, and TableDeck to be empty Deck objects (no cards)
 
-        public GameState()
-        {
-            Winner = string.Empty;
-            CardDeck = new Deck(null, false); // fresh deck of 52 cards
-            PlayerDeck = new Deck(null, true); // empty deck
-            ComputerDeck = new Deck(null, true); // empty deck
-            TableDeck = new Deck(null, true); // empty deck
-        }
-    }
-}
+
+
 
 
 // Create an instance of the GameState class
+using System.Data;
+
 GameState state = new GameState();
 
+System.Console.WriteLine(state.CardDeck.Count);
 
 
 // Shuffle CardDeck within your instance
 state.CardDeck.Shuffle();
 
+System.Console.WriteLine(state.CardDeck.Count);
+
 // Deal 26 cards each from CardDeck to your instance's PlayerDeck and ComputerDeck
 state.PlayerDeck = new Deck(state.CardDeck.Deal(26));
+
+System.Console.WriteLine(state.CardDeck.Count);
+
 state.ComputerDeck = new Deck(state.CardDeck.Deal(26));
 
 
@@ -85,7 +57,7 @@ static bool PlayCards(GameState state, int playerCardIndex)
             computerCard
         };
         wonCards.AddRange(state.TableDeck.PullAllCards());
-        state.PlayerDeck.AddCards(wonCards);
+        state.PlayerDeck.PushCards(wonCards);
     }
     else if (computerCard > playerCard)
     {
@@ -96,13 +68,13 @@ static bool PlayCards(GameState state, int playerCardIndex)
             computerCard
         };
         wonCards.AddRange(state.TableDeck.PullAllCards());
-        state.ComputerDeck.AddCards(wonCards);
+        state.ComputerDeck.PushCards(wonCards);
     }
     else
     {
         //both cards go into TableDeck
-        state.TableDeck.AddCard(playerCard);
-        state.TableDeck.AddCard(computerCard);
+        state.TableDeck.PushCard(playerCard);
+        state.TableDeck.PushCard(computerCard);
     }
 
    return true;

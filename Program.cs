@@ -1,5 +1,9 @@
 ﻿using GameOfWar;
-
+~~~~
+// state.CardDeck.Shuffle();
+// state.PlayerDeck = new Deck(state.CardDeck.Deal(26));
+// state.ComputerDeck = new Deck(state.CardDeck.Deal(26));
+~~~~
 // Create an instance of the GameState class
 // Shuffle CardDeck within your instance
 // Deal 26 cards each from CardDeck to your instance's PlayerDeck and ComputerDeck

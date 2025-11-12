@@ -42,12 +42,10 @@ state.ComputerDeck = new Deck(state.CardDeck.Deal(26));
 
 static bool PlayCards(GameState state, int playerCardIndex)
 {
-    state.PlayerDeck.PullCardAtIndex(playerCardIndex);
+    Card playerCard = state.PlayerDeck.PullCardAtIndex(playerCardIndex);
 
-    state.ComputerDeck.PullCardAtIndex(0);
-
-    Card playerCard = state.PlayerDeck.CardAtIndex(playerCardIndex);
-    Card computerCard = state.ComputerDeck.CardAtIndex(0);
+    Card computerCard = state.ComputerDeck.PullCardAtIndex(0);
+    
     if (playerCard > computerCard)
     {
         //player gets both cards and any in TableDeck

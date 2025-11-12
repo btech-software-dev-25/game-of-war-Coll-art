@@ -64,7 +64,10 @@ using System.Collections.ObjectModel;
             {
                 for (int j = 0; j < suits.Length; j++)
                 {
-                    Card newCard = new Card(suits[j], i);
+                Card newCard = new Card(suits[j], i);
+                    
+                    System.Console.WriteLine($"rank: {newCard.Rank}");
+
                     _cards.Add(newCard);
                 }
             }

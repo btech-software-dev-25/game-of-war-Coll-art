@@ -15,7 +15,7 @@
         {
             Suit = suit;
 
-            Rank = Rank;
+            Rank = rank;
         }
 
         // Overload the > operator to compare two cards by rank
@@ -33,29 +33,31 @@
 
 
 
-        // Create a public string method RankString that returns a string representation of this card's rank, 2-10 and Jack, Queen, King, Ace
-        public string RankString()
-        {
-           //string[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+    // Create a public string method RankString that returns a string representation of this card's rank, 2-10 and Jack, Queen, King, Ace
+    public string RankString()
+    {
+        string[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
 
-            return Rank switch
-            {
-                0 => "2",
-                1 => "3",
-                2 => "4",
-                3 => "5",
-                4 => "6",
-                5 => "7",
-                6 => "8",
-                7 => "9",
-                8 => "10",
-                9 => "Jack",
-                10 => "Queen",
-                11 => "King",
-                12 => "Ace",
-                _ => "Unknown"
-            };
+        return ranks[Rank];
+        
+        // return Rank switch
+        // {
+        //     0 => "2",
+        //     1 => "3",
+        //     2 => "4",
+        //     3 => "5",
+        //     4 => "6",
+        //     5 => "7",
+        //     6 => "8",
+        //     7 => "9",
+        //     8 => "10",
+        //     9 => "Jack",
+        //     10 => "Queen",
+        //     11 => "King",
+        //     12 => "Ace",
+        //     _ => "Unknown"
+        // };
 
-        }
+    }
 
     }   
